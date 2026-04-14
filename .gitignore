@@ -1,0 +1,17 @@
+bin/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+
+.DS_Store
+.idea/
+*.user
+*.DotSettings.user
+
+node_modules/
+dist/
+.angular/
+
+**/bin/
+**/obj/

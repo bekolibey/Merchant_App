@@ -1,0 +1,165 @@
+<section class="page">
+  <header class="page-header">
+    <div>
+      <p class="kicker">Ekran 1</p>
+      <h2>Basvuru Ekrani</h2>
+      <p>Uye isyeri bilgilerini, dokumanlarini ve konumunu tek formdan topla.</p>
+    </div>
+
+    <div class="rates" *ngIf="exchangeRates() as rates">
+      <div>
+        <span>USD/TRY</span>
+        <strong>{{ rates.usdToTryRate ?? '-' }}</strong>
+      </div>
+      <div>
+        <span>EUR/TRY</span>
+        <strong>{{ rates.eurToTryRate ?? '-' }}</strong>
+      </div>
+    </div>
+  </header>
+
+  <form class="form-grid" [formGroup]="form" (ngSubmit)="submit()">
+    <section class="card section">
+      <h3>Temel Bilgiler</h3>
+      <div class="grid two">
+        <label>
+          <span>Firma Adi / Ad Soyad</span>
+          <input formControlName="CompanyName" />
+          <small *ngIf="fieldInvalid('CompanyName')">Bu alan zorunlu.</small>
+        </label>
+
+        <label>
+          <span>Vergi No / TCKN</span>
+          <input formControlName="TaxNumber" />
+          <small *ngIf="fieldInvalid('TaxNumber')">Vergi no 10 haneli olmalidir.</small>
+        </label>
+
+        <label>
+          <span>Vergi Dairesi</span>
+          <input formControlName="TaxOffice" />
+        </label>
+
+        <label>
+          <span>Yetkili / Yonetici</span>
+          <input formControlName="AuthorizedPersonName" />
+        </label>
+
+        <label>
+          <span>Yetkili TCKN</span>
+          <input formControlName="AuthorizedPersonIdNumber" />
+          <small *ngIf="fieldInvalid('AuthorizedPersonIdNumber')">TCKN 11 haneli olmalidir.</small>
+        </label>
+
+        <label>
+          <span>Email</span>
+          <input formControlName="Email" type="email" />
+          <small *ngIf="fieldInvalid('Email')">Gecerli bir email girin.</small>
+        </label>
+      </div>
+    </section>
+
+    <section class="card section">
+      <h3>Iletisim ve Adres</h3>
+      <div class="grid three">
+        <label>
+          <span>Ev Telefonu</span>
+          <input formControlName="HomePhone" />
+        </label>
+
+        <label>
+          <span>Is Telefonu</span>
+          <input formControlName="WorkPhone" />
+        </label>
+
+        <label>
+          <span>Cep Telefonu</span>
+          <input formControlName="MobilePhone" />
+          <small *ngIf="fieldInvalid('MobilePhone')">Cep telefonu zorunlu.</small>
+        </label>
+      </div>
+
+      <div class="grid two">
+        <label class="full">
+          <span>Adres</span>
+          <textarea rows="3" formControlName="AddressDetail"></textarea>
+        </label>
+
+        <label>
+          <span>Il</span>
+          <input formControlName="City" />
+        </label>
+
+        <label>
+          <span>Ilce</span>
+          <input formControlName="District" />
+        </label>
+
+        <label>
+          <span>Web Adresi</span>
+          <input formControlName="WebAddress" />
+        </label>
+      </div>
+    </section>
+
+    <section class="card section">
+      <h3>Is Bilgileri</h3>
+      <div class="grid two">
+        <label>
+          <span>Is Kategorisi</span>
+          <input formControlName="BusinessCategory" />
+        </label>
+
+        <label>
+          <span>Tahmini Aylik Ciro</span>
+          <input formControlName="EstimatedMonthlyTurnover" type="number" />
+        </label>
+      </div>
+    </section>
+
+    <section class="card section map-card">
+      <div class="section-heading">
+        <div>
+          <h3>Harita ve Konum</h3>
+          <p>Koordinatlari gir, Google Maps uzerinden konumu aninda gor.</p>
+        </div>
+      </div>
+
+      <div class="grid two">
+        <label>
+          <span>Latitude</span>
+          <input formControlName="Latitude" type="number" step="0.000001" />
+        </label>
+
+        <label>
+          <span>Longitude</span>
+          <input formControlName="Longitude" type="number" step="0.000001" />
+        </label>
+      </div>
+
+      <iframe class="map-frame" [src]="mapUrl()" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </section>
+
+    <section class="card section">
+      <h3>Uye Isyeri Dokumanlari</h3>
+      <div class="document-grid">
+        <label class="document-item" *ngFor="let type of documentTypes()">
+          <span>{{ type }}</span>
+          <input type="file" accept=".pdf,.png,.jpg,.jpeg" (change)="onFileSelected($event, type)" />
+          <strong>{{ selectedFileName(type) }}</strong>
+        </label>
+      </div>
+    </section>
+
+    <section class="submit-bar">
+      <div>
+        <p class="status-line">Varsayilan durum: {{ statuses().length ? statuses()[0] : 'Bekliyor' }}</p>
+        <p class="error" *ngIf="submitError()">{{ submitError() }}</p>
+        <p class="success" *ngIf="submitResult()">Basvuru kaydedildi. ID: {{ submitResult()?.id }}</p>
+      </div>
+
+      <button type="submit" [disabled]="submitting()">
+        {{ submitting() ? 'Gonderiliyor...' : 'Basvuruyu Kaydet' }}
+      </button>
+    </section>
+  </form>
+</section>

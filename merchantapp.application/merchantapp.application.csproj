@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>son_calisma_merchantapp</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="EntityFramework" Version="6.5.1" />
+      <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.5" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="11.0.0-preview.2.26159.112" />
+      <PackageReference Include="TS.Result" Version="10.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\merchant.domain\merchant.domain.csproj" />
+    </ItemGroup>
+
+</Project>

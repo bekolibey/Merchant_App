@@ -1,0 +1,150 @@
+<section class="page">
+  <header class="header">
+    <div>
+      <p class="kicker">Ekran 2</p>
+      <h2>Listeleme ve Izleme Raporu</h2>
+      <p>Vergi no, firma, durum, tarih ve sehir bazli filtrele. Sayfali liste ve durum ozeti gor.</p>
+    </div>
+  </header>
+
+  <section class="report-grid" *ngIf="report() as report">
+    <article class="card accent">
+      <span>Toplam Basvuru</span>
+      <strong>{{ report.totalApplications }}</strong>
+    </article>
+
+    <article class="card">
+      <h3>Durum Dagilimi</h3>
+      <div class="stack">
+        <div *ngFor="let item of report.statusCounts | keyvalue">
+          <span>{{ item.key }}</span>
+          <strong>{{ item.value }}</strong>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>Sehir Dagilimi</h3>
+      <div class="stack">
+        <div *ngFor="let item of report.cityCounts | keyvalue">
+          <span>{{ item.key }}</span>
+          <strong>{{ item.value }}</strong>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section class="card">
+    <form class="filters" [formGroup]="filters" (ngSubmit)="loadPage(1)">
+      <input placeholder="Vergi No" formControlName="TaxNumber" />
+      <input placeholder="Firma Adi" formControlName="CompanyName" />
+      <select formControlName="Status">
+        <option value="">Tum Durumlar</option>
+        <option *ngFor="let status of statuses()" [value]="status">{{ status }}</option>
+      </select>
+      <input placeholder="Sehir" formControlName="City" />
+      <input type="date" formControlName="StartDate" />
+      <input type="date" formControlName="EndDate" />
+      <button type="submit">Filtrele</button>
+    </form>
+  </section>
+
+  <section class="content-grid">
+    <section class="card table-card">
+      <header class="table-header">
+        <h3>Basvurular</h3>
+        <span *ngIf="page() as page">{{ page.totalCount }} kayit</span>
+      </header>
+
+      <div class="loading" *ngIf="loading()">Yukleniyor...</div>
+
+      <table *ngIf="page() as page">
+        <thead>
+          <tr>
+            <th>Firma</th>
+            <th>Vergi No</th>
+            <th>Sehir</th>
+            <th>Durum</th>
+            <th>Tarih</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of page.items" (click)="selectApplication(item.id)" [class.selected]="selected()?.id === item.id">
+            <td>{{ item.companyName }}</td>
+            <td>{{ item.taxNumber }}</td>
+            <td>{{ item.city }} / {{ item.district }}</td>
+            <td>{{ item.status }}</td>
+            <td>{{ item.createdAt | date:'dd.MM.yyyy HH:mm' }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <footer class="pager" *ngIf="page() as page">
+        <button type="button" [disabled]="page.pageNumber <= 1" (click)="loadPage(page.pageNumber - 1)">Geri</button>
+        <span>Sayfa {{ page.pageNumber }} / {{ page.totalPages }}</span>
+        <button type="button" [disabled]="page.pageNumber >= page.totalPages" (click)="loadPage(page.pageNumber + 1)">Ileri</button>
+      </footer>
+    </section>
+
+    <aside class="card detail-card">
+      <div *ngIf="detailLoading()">Detay yukleniyor...</div>
+
+      <ng-container *ngIf="selected() as selected; else emptyState">
+        <header class="detail-header">
+          <div>
+            <h3>{{ selected.companyName }}</h3>
+            <p>{{ selected.taxNumber }} · {{ selected.city }} / {{ selected.district }}</p>
+          </div>
+          <span class="badge">{{ selected.status }}</span>
+        </header>
+
+        <div class="detail-grid">
+          <div>
+            <span>Email</span>
+            <strong>{{ selected.email }}</strong>
+          </div>
+          <div>
+            <span>Telefon</span>
+            <strong>{{ selected.mobilePhone }}</strong>
+          </div>
+          <div>
+            <span>Kategori</span>
+            <strong>{{ selected.businessCategory }}</strong>
+          </div>
+          <div>
+            <span>Aylik Ciro</span>
+            <strong>{{ selected.estimatedMonthlyTurnover | number:'1.0-2' }}</strong>
+          </div>
+        </div>
+
+        <div class="address-box">
+          <span>Adres</span>
+          <strong>{{ selected.addressDetail }}</strong>
+        </div>
+
+        <div class="address-box">
+          <span>Not</span>
+          <textarea rows="3" [value]="updateNote()" (input)="updateNote.set($any($event.target).value)"></textarea>
+        </div>
+
+        <div class="status-actions">
+          <button type="button" *ngFor="let status of statuses()" (click)="changeStatus(status)">{{ status }}</button>
+        </div>
+
+        <div class="documents">
+          <h4>Dokumanlar</h4>
+          <a *ngFor="let document of selected.documents"
+             [href]="'http://localhost:5058/api/merchant-applications/' + selected.id + '/documents/' + document.id"
+             target="_blank"
+             rel="noopener">
+            {{ document.documentType }} · {{ document.originalFileName }}
+          </a>
+        </div>
+      </ng-container>
+
+      <ng-template #emptyState>
+        <p class="empty">Detay gormek icin soldaki tablodan bir kayit sec.</p>
+      </ng-template>
+    </aside>
+  </section>
+</section>

@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "merchantapp.application", "merchantapp.application\merchantapp.application.csproj", "{F6061AD2-5F50-43BD-8C44-F929EDEFF1E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "merchantapp.Infrastructure", "merchantapp.Infrastructure\merchantapp.Infrastructure.csproj", "{78F0ACCB-6429-4040-9FBC-35309A861BFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "merchant.domain", "merchant.domain\merchant.domain.csproj", "{53F4FBE3-DA27-4E19-B70D-421D8C43C672}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchantApp.WebAPI", "MerchantApp.WebAPI\MerchantApp.WebAPI.csproj", "{5ED09DDB-8CA2-40FA-898A-59F112ED2FFA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F6061AD2-5F50-43BD-8C44-F929EDEFF1E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6061AD2-5F50-43BD-8C44-F929EDEFF1E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6061AD2-5F50-43BD-8C44-F929EDEFF1E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6061AD2-5F50-43BD-8C44-F929EDEFF1E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78F0ACCB-6429-4040-9FBC-35309A861BFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78F0ACCB-6429-4040-9FBC-35309A861BFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78F0ACCB-6429-4040-9FBC-35309A861BFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78F0ACCB-6429-4040-9FBC-35309A861BFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53F4FBE3-DA27-4E19-B70D-421D8C43C672}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53F4FBE3-DA27-4E19-B70D-421D8C43C672}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53F4FBE3-DA27-4E19-B70D-421D8C43C672}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53F4FBE3-DA27-4E19-B70D-421D8C43C672}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ED09DDB-8CA2-40FA-898A-59F112ED2FFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ED09DDB-8CA2-40FA-898A-59F112ED2FFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ED09DDB-8CA2-40FA-898A-59F112ED2FFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ED09DDB-8CA2-40FA-898A-59F112ED2FFA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
